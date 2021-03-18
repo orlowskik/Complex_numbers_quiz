@@ -16,10 +16,18 @@ static WyrazenieZesp  TestLatwy[] =
     {{4,8}, Op_Dziel, {1,0}},
   };
 
+
 /*
- * Analogicznie zdefiniuj test "trudne"
- *
+ * Tablica, ktora jest widoczna tylko w tym module.
+ * Zawiera ona tresc trudnego testu.
  */
+static WyrazenieZesp  TestTrudny[] =
+  { {{0.4,2}, Op_Dodaj, {-5,1.14}},
+    {{4.15,0}, Op_Odejmij, {4.15,0}},
+    {{1.5,3}, Op_Mnoz, {-2,4.6}},
+    {{10,5}, Op_Dziel, {0,0}},
+    {{-2,4}, Op_Dodaj, {-5,2}}
+  };
 
 
 
@@ -77,9 +85,10 @@ bool InicjalizujTest( BazaTestu  *wskBazaTestu, const char *sNazwaTestu )
     UstawTest(wskBazaTestu,TestLatwy,sizeof(TestLatwy)/sizeof(WyrazenieZesp));
     return true;
   }
-  /*
-   * Analogicznie zrob inicjalizacje dla testu trudne
-   */
+  if (!strcmp(sNazwaTestu,"trudny")) {
+    UstawTest(wskBazaTestu,TestTrudny,sizeof(TestTrudny)/sizeof(WyrazenieZesp));
+    return true;
+  }
 
   cerr << "Otwarcie testu '" << sNazwaTestu << "' nie powiodlo sie." << endl;
   return false;

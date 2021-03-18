@@ -1,5 +1,6 @@
 #include <iostream>
 #include "BazaTestu.hh"
+#include "Statystyki.hh"
 
 using namespace std;
 
@@ -31,16 +32,61 @@ int main(int argc, char **argv)
   cout << " Start testu arytmetyki zespolonej: " << argv[1] << endl;
   cout << endl;
 
-  WyrazenieZesp   WyrZ_PytanieTestowe;
-  
-  while (PobierzNastpnePytanie(&BazaT,&WyrZ_PytanieTestowe)) {
-    cout << " Czesc rzeczywista pierwszego argumentu: ";
-    cout << WyrZ_PytanieTestowe.Arg1.re << endl;
+  WyrazenieZesp   WyrZ_Testowe;
+  LZespolona      Odpowiedz;
+  LZespolona      Wynik;
+  stat            Statystyka;
+  int             Bledy_czytania, Odczytano ;
+
+
+
+  Statystyka = inicjuj(BazaT.IloscPytan);
+
+  while (PobierzNastpnePytanie(&BazaT,&WyrZ_Testowe)) {
+    Bledy_czytania = 0;
+    Odczytano = 0;
+
+
+    Wynik = Oblicz(WyrZ_Testowe);
+
+    cout << " Podaj wynik operacji: " << WyrZ_Testowe << "=" << endl;
+    cout << " Twoja odpowiedz: ";
+    while(Bledy_czytania < 3 && Odczytano == 0){ 
+
+      cin >> Odpowiedz;
+      if(cin.fail())
+        Bledy_czytania++;
+      else
+        Odczytano++;
+
+      cin.clear();
+      cin.ignore(1024,'\n');
+      if(Bledy_czytania > 0 && Odczytano == 0){
+      cout << " Bledne wprowadzenie. Sprobuj ponownie" << endl;
+      cout << " Twoja odpowiedz: ";
+      }
+    }
+    cout << endl;
+
+
+    if(Odpowiedz == Wynik){
+      Statystyka.prawda += 1;
+      cout << " Poprawna odpowiedz!" << endl;
+      cout << endl;
+    }
+    else{
+      Statystyka.falsz += 1;
+      cout << " Bledna odpowiedz! Poprawna odpowiedz to: " << Wynik; 
+      cout << endl << endl;
+    }
+
   }
 
-  
+  wyswietl(Statystyka);
+
   cout << endl;
   cout << " Koniec testu" << endl;
   cout << endl;
 
+  
 }
