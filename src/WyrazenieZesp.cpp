@@ -44,9 +44,16 @@ LZespolona Oblicz(WyrazenieZesp  WyrZ){
         case 2 :
             return WyrZ.Arg1 * WyrZ.Arg2;
         case 3 :
-            return WyrZ.Arg1 / WyrZ.Arg2;
+            try{
+                return WyrZ.Arg1 / WyrZ.Arg2;
+            }
+            catch (const char *msg){
+                std::cerr << msg << std::endl;
+                throw " Blad obliczen. Przyklad pominiety.";
+            }
+            return Blad;
         default:
-            std::cerr << "Bledny operator.";
+            std::cerr << " Bledny operator.";
             break;
     }
 
