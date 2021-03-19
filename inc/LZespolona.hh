@@ -19,24 +19,51 @@ struct  LZespolona {
 };
 
 
-/*
- *  Zapowiedzi definicji przeciazen operatorow
- */
 
+/*!
+*  Porownuje dwie liczby zespolone.
+*/
 bool  operator == (LZespolona  Skl1,  LZespolona  Skl2);
 
+
+/*!
+*  Dodaje dwie liczby zespolone.
+*/
 LZespolona  operator + (LZespolona  Skl1,  LZespolona  Skl2);
 
+/*!
+*  Odejmuje dwie liczby zespolone.
+*/
 LZespolona  operator - (LZespolona  Skl1,  LZespolona  Skl2);
 
+
+/*!
+*  Mnozy dwie liczby zespolone.
+*/
 LZespolona  operator * (LZespolona  Skl1,  LZespolona  Skl2);
 
+
+/*!
+*  Dzieli dwie liczby zespolone.
+*/
 LZespolona  operator / (LZespolona  Skl1,  LZespolona  Skl2);
 
+
+/*!
+*  Dzieli liczbe zespolona przez liczbe rzeczywista.
+*/
 LZespolona operator  /  (LZespolona Skl1,  double   Skl2);
 
+
+/*!
+*  Wyswietla liczbe zespolona na podanym strumieniu.
+*/
 std::ostream&  operator << (std::ostream &StrWyj, LZespolona &Skl1);
 
+
+/*!
+*  Wczytuje podana liczbe zespolona z podanego wejscia.
+*/
 std::istream&  operator >> (std::istream &StrWej , LZespolona &Skl1);
 
 
@@ -46,12 +73,15 @@ std::istream&  operator >> (std::istream &StrWej , LZespolona &Skl1);
 void CzytajZnak( std::istream &StrWej, char Znak);
 
 
-/*
-* Zapowiedz definicji modulu i sprzezenia
+/*!
+*  Tworzy modul podniesiony do kwadratu z liczby zespolonej. 
 */
-
 double modul(LZespolona Skl);
 
+
+/*!
+*  Wykonuje sprzezenie liczby zespolonej.
+*/
 LZespolona sprz(LZespolona Skl);
 
 #endif

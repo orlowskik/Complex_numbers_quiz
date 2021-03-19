@@ -23,17 +23,25 @@ std::ostream& operator << ( std::ostream &StrWyj, WyrazenieZesp &WyrZ){
 }
 
 
+/*!
+ *  Wczytuje operator wyrazenia zespolonego z podanego strumienia. Przeciazenie pomocnicze.
+ *  Argumenty:
+ *    StrWej - Strumien wejsciowy, z ktorego czytany jest operator
+ *    WczytSym - Operator stosowany w wyrazeniu zespolonym
+ *  Zwraca:
+ *    StrWej - Strumien wejsciowy, z ktorego czytano operator.
+ */
 std::istream& operator >> ( std::istream &StrWej, Operator &WczytSym ){
-    Operator TabTypOp[] = { Op_Dodaj, Op_Odejmij, Op_Mnoz, Op_Dziel };
-    const char TabSymOp[] = "+-*/", *wSymOp;
-    char CzytSym = ' ';
+    Operator TabTypOp[] = { Op_Dodaj, Op_Odejmij, Op_Mnoz, Op_Dziel }; /* Mozliwe operatory w tablicy numerowanej */
+    const char TabSymOp[] = "+-*/", *wSymOp;        /* Tablica mozliwych opcji i wskaznik na wczytany symbol*/
+    char CzytSym = ' ';     /* Wczytany symbol */
 
     StrWej >> CzytSym;
 
-    if( (wSymOp = strchr(TabSymOp,CzytSym)) == nullptr )
+    if( (wSymOp = strchr(TabSymOp,CzytSym)) == nullptr )    /* Sprawdzenie, czy wczytany znak jest mozliwym operatorem i ustawienie wskaznika na miejsce jego wystepowania */
         StrWej.setstate(std::ios::failbit);
     else
-        WczytSym = TabTypOp[wSymOp - TabSymOp]; 
+        WczytSym = TabTypOp[wSymOp - TabSymOp]; /* W wypadku podania prawidlowej opcji ustawienie operatora */
 
     return StrWej;
 }
@@ -42,7 +50,14 @@ std::istream& operator >> ( std::istream &StrWej, Operator &WczytSym ){
 
 
 
-
+/*!
+ *  Wczytuje wyrazenie zespolone z podanego strumienia.
+ *  Argumenty:
+ *    StrWej - Strumien wejsciowy, z ktorego czytane jest wyrazenie
+ *    WyrZ - Wyrazenie zespolone, do ktorego wpisujemy wartosci.
+ *  Zwraca:
+ *    StrWej - Strumien wejsciowy, z ktorego czytano wyrazenie.
+ */
 std::istream& operator >> (std::istream &StrWej, WyrazenieZesp &WyrZ){
     std::cin >> WyrZ.Arg1 >> WyrZ.Op >> WyrZ.Arg2 ;    
     return StrWej;
@@ -72,7 +87,7 @@ LZespolona Oblicz(WyrazenieZesp  WyrZ){
         case 2 :
             return WyrZ.Arg1 * WyrZ.Arg2;
         case 3 :
-            try{
+            try{                                            /* Obsluga wyjatkow. Dzielenie przez 0 */ 
                 return WyrZ.Arg1 / WyrZ.Arg2;
             }
             catch (const char *msg){

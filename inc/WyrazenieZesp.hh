@@ -23,19 +23,26 @@ struct WyrazenieZesp {
 };
 
 
-/*
- * Funkcje ponizej nalezy zdefiniowac w module.
- *
- */
-
-
+/*!
+*  Wyswietla wyrazenie zespolone.
+*/
 std::ostream& operator << ( std::ostream &StrWyj, WyrazenieZesp &WyrZ);
 
+/*!
+*  Wczytuje wyrazenie zespolone.
+*/
 std::istream& operator >> ( std::istream &StrWej, WyrazenieZesp &WyrZ);
 
+
+/*!
+*  Wczytuje operator wyrazenia zespolonego.
+*/
 std::istream& operator >> ( std::istream &StrWej, Operator * WczytSym);
 
 
+/*!
+*  Oblicza wyrazenie zespolone.
+*/
 LZespolona Oblicz(WyrazenieZesp  WyrZ);
 
 #endif

@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-#define MIN_DIFF 0.00001
+#define MIN_DIFF 0.00001 /* Dopuszczalny blad odpowiedzi */
 
 /*!
  * Realizuje porównanie dwoch liczb zespolonych.
@@ -148,13 +148,27 @@ LZespolona sprz(LZespolona Skl){
   return Wynik;
 }
 
-
+/*!
+ *  Wyswietla liczbe zespolona na podanym wyjsciu.
+ *  Argumenty:
+ *    StrWyj - Strumien wyjsciowy, na ktory ma zostac wyswietlona liczba,
+ *    Skl1 - Liczba zespolona sprzegana.
+ *  Zwraca:
+ *    StrWyj - Strumien wyjsciowy, na ktory wypisano liczbe.
+ */
 std::ostream&  operator << (std::ostream &StrWyj, LZespolona &Skl1){
   std::cout << std::noshowpos << '(' << Skl1.re << std::showpos << Skl1.im << 'i' << ')' << "  ";
   return StrWyj;
 }
 
-
+/*!
+ *  Funkcja pomocnicza do wczytywania liczby zespolonej. Sprawdza wprowadzany znak.
+ *  Argumenty:
+ *    StrWej - Strumien wejsciowy, z ktorego czytany jest znak
+ *    Znak - znak, ktorego oczekujemy.
+ *  Wynik:
+ *     Ustawia flage niepowodzenia na strumieniu jezeli wczytany znak jest inny niz oczekiwany.
+ */
 void CzytajZnak(std::istream &StrWej, char Znak){
   char CzytanyZnak = ' ';
   StrWej >> CzytanyZnak;
@@ -165,6 +179,14 @@ void CzytajZnak(std::istream &StrWej, char Znak){
 }
 
 
+/*!
+ *  Wczytuje liczbe zespolona z podanego strumienia.
+ *  Argumenty:
+ *    StrWej - Strumien wejsciowy, z ktorego czytana jest liczba
+ *    Skl1 - Liczba zespolona, do ktorej wpisujemy wartosci.
+ *  Zwraca:
+ *    StrWej - Strumien wejsciowy, z ktorego czytano liczbe.
+ */
 std::istream& operator >> (std::istream &StrWej, LZespolona &Skl){
   CzytajZnak(StrWej, '(');
   StrWej >> Skl.re;
