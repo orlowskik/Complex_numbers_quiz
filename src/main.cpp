@@ -57,6 +57,7 @@ int main(int argc, char **argv)
     }
 
     if(!Bledy_obliczen){
+      Wynik = Oblicz(WyrZ_Testowe);
       cout << " Podaj wynik operacji: " << WyrZ_Testowe << "=" << endl;
       cout << " Twoja odpowiedz: ";
       while(Bledy_czytania < 3 && Odczytano == 0){ 

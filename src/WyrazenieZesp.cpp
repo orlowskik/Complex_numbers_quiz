@@ -94,7 +94,7 @@ LZespolona Oblicz(WyrazenieZesp  WyrZ){
                 std::cerr << msg << std::endl;
                 throw " Blad obliczen. Przyklad pominiety.";
             }
-            return Blad;
+            return WyrZ.Arg1 / WyrZ.Arg2;
         default:
             std::cerr << " Bledny operator.";
             break;
