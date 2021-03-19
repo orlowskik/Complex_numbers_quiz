@@ -33,6 +33,8 @@ std::ostream& operator << ( std::ostream &StrWyj, WyrazenieZesp &WyrZ);
 
 std::istream& operator >> ( std::istream &StrWej, WyrazenieZesp &WyrZ);
 
+std::istream& operator >> ( std::istream &StrWej, Operator * WczytSym);
+
 
 LZespolona Oblicz(WyrazenieZesp  WyrZ);
 

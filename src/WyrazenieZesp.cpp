@@ -1,6 +1,6 @@
 #include "WyrazenieZesp.hh"
 #include <iostream>
-
+#include <cstring>
 
 
 
@@ -21,6 +21,34 @@ std::ostream& operator << ( std::ostream &StrWyj, WyrazenieZesp &WyrZ){
 
     return StrWyj;
 }
+
+
+std::istream& operator >> ( std::istream &StrWej, Operator &WczytSym ){
+    Operator TabTypOp[] = { Op_Dodaj, Op_Odejmij, Op_Mnoz, Op_Dziel };
+    const char TabSymOp[] = "+-*/", *wSymOp;
+    char CzytSym = ' ';
+
+    StrWej >> CzytSym;
+
+    if( (wSymOp = strchr(TabSymOp,CzytSym)) == nullptr )
+        StrWej.setstate(std::ios::failbit);
+    else
+        WczytSym = TabTypOp[wSymOp - TabSymOp]; 
+
+    return StrWej;
+}
+
+
+
+
+
+
+std::istream& operator >> (std::istream &StrWej, WyrazenieZesp &WyrZ){
+    std::cin >> WyrZ.Arg1 >> WyrZ.Op >> WyrZ.Arg2 ;    
+    return StrWej;
+}
+
+
 
 
 /*!
