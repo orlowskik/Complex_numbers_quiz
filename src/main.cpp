@@ -82,11 +82,11 @@ int main(int argc, char **argv)
 
   }
 
-  wyswietl(Statystyka);
+  
 
   cout << endl;
   cout << " Koniec testu" << endl;
   cout << endl;
 
-  
+  wyswietl(Statystyka);
 }
