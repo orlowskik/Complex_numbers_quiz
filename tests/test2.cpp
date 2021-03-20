@@ -54,7 +54,7 @@ TEST_CASE("Test wyswietlania liczby zespolonej"){
 TEST_CASE("Test wczytywania liczby zespolonej"){
     LZespolona x;
 
-    std::cout << "Prosze wpisac powyzsza liczbe. Jest to test czytania liczby" << std::endl;
+    std::cout << "Prosze wpisac poprawna liczbe. Jest to test czytania liczby" << std::endl;
     std::cin >> x;
 
     CHECK(std::cin.fail() == 0 );
