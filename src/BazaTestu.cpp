@@ -25,7 +25,7 @@ static WyrazenieZesp  TestTrudny[] =
   { {{0.4,2}, Op_Dodaj, {-5,1.14}},
     {{4.15,0}, Op_Odejmij, {4.15,0}},
     {{1.5,3}, Op_Mnoz, {-2,4.6}},
-    {{-4,8}, Op_Dziel, {2,-1}},
+    {{2,8}, Op_Dziel, {3,-1}},
     {{-2,4}, Op_Dodaj, {-5,2}}
   };
 

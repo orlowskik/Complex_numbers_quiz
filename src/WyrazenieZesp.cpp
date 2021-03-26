@@ -15,9 +15,9 @@
  */
 std::ostream& operator << ( std::ostream &StrWyj, WyrazenieZesp &WyrZ){
     char znak[]={'+','-','*','/'};      /* Tablica zawierajaca mozliwe znaki dzialan arytmetycznych */
-    std::cout << WyrZ.Arg1 << " ";
-    std::cout << znak[WyrZ.Op] << "  "; /* Wyswietlenie znaku dzialania arytmetycznego */
-    std::cout << WyrZ.Arg2;
+    StrWyj << WyrZ.Arg1;
+    StrWyj << znak[WyrZ.Op]; /* Wyswietlenie znaku dzialania arytmetycznego */
+    StrWyj << WyrZ.Arg2;
 
     return StrWyj;
 }
@@ -59,7 +59,7 @@ std::istream& operator >> ( std::istream &StrWej, Operator &WczytSym ){
  *    StrWej - Strumien wejsciowy, z ktorego czytano wyrazenie.
  */
 std::istream& operator >> (std::istream &StrWej, WyrazenieZesp &WyrZ){
-    std::cin >> WyrZ.Arg1 >> WyrZ.Op >> WyrZ.Arg2 ;    
+    StrWej >> WyrZ.Arg1 >> WyrZ.Op >> WyrZ.Arg2 ;    
     return StrWej;
 }
 

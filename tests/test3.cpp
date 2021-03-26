@@ -119,9 +119,12 @@ TEST_CASE("Wyswietlanie wyrazenia zespolonego"){
     z.Arg2 = y;
     z.Op = Op_Dodaj;
 
-    std::cout << z << std::endl;
+    std::ostringstream out;
 
-    CHECK(std::cout.fail() == 0);
+    out << z;
+    std::cout << out.str() << std::endl;
+
+    CHECK( out.str() == "(2.00+2.00i)+(3.00-2.00i)");
 }
 
 
@@ -129,8 +132,11 @@ TEST_CASE("Wyswietlanie wyrazenia zespolonego"){
 TEST_CASE("Czytanie wyrazenia zespolonego"){
     WyrazenieZesp x;
 
-    std::cout << "Prosze wpisac poprawne wyrazenie. Jest to test czytania wyrazenia" << std::endl;
-    std::cin >> x;
+    std::istringstream in("(5.00+3.00i)-(3.12-4.00i)");
+    in >> x;
+    std::ostringstream out;
+    out << x;
+    std::cout << out.str() << std::endl;
 
-    CHECK(std::cin.fail() == 0);    
+    CHECK("(5.00+3.00i)-(3.12-4.00i)" == out.str() );    
 }

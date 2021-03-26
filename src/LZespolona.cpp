@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-#define MIN_DIFF 0.00001 /* Dopuszczalny blad odpowiedzi */
+#define MIN_DIFF 0.01 /* Dopuszczalny blad odpowiedzi */
 
 /*!
  * Realizuje porównanie dwoch liczb zespolonych.
@@ -82,7 +82,6 @@ LZespolona operator / (LZespolona Skl1, LZespolona Skl2){
   LZespolona Sprz;
   LZespolona Wynik;
 
-  
   if(!modul(Skl2))
     throw " Nie dziel przez 0";
 
@@ -160,7 +159,8 @@ LZespolona sprz(LZespolona Skl){
  *    StrWyj - Strumien wyjsciowy, na ktory wypisano liczbe.
  */
 std::ostream&  operator << (std::ostream &StrWyj, LZespolona &Skl1){
-  std::cout << std::noshowpos << '(' << Skl1.re << std::showpos << Skl1.im << 'i' << ')' << "  ";
+  StrWyj.precision(2);
+  StrWyj << std::noshowpos << '(' << std::fixed << Skl1.re << std::showpos << Skl1.im << "i)" << std::noshowpos ;
   return StrWyj;
 }
 

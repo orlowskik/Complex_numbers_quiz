@@ -1,6 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "./doctest/doctest.h"
 #include "LZespolona.hh"
+#include <sstream>
 
 TEST_CASE("Test LZespolona dzielenie przez skalar 1") {
     LZespolona x, y;
@@ -45,17 +46,35 @@ TEST_CASE("Test wyswietlania liczby zespolonej"){
     x.re = 2;
     x.im = 2;
 
-    std::cout << x << std::endl;
+    std::ostringstream out;
 
-    CHECK(std::cout.fail() == 0 );
+    out << x;
+    std::cout << out.str() << std::endl;
+    CHECK( out.str() == "(2.00+2.00i)" );
 }
 
 
-TEST_CASE("Test wczytywania liczby zespolonej"){
+TEST_CASE("LZespolona - wyswietlanie zaokraglane") {
     LZespolona x;
+   
+    x.re = 2.0/3.0;
+    x.im = 2.0/3.0;
+    
+    std::ostringstream out;
+    
+    out << x;
+    std::cout << out.str() << std::endl;
+    CHECK( "(0.67+0.67i)" == out.str() );
+}
 
-    std::cout << "Prosze wpisac poprawna liczbe. Jest to test czytania liczby" << std::endl;
-    std::cin >> x;
 
-    CHECK(std::cin.fail() == 0 );
+TEST_CASE("LZespolona - wczytywanie standard") {
+    LZespolona x;
+    
+    std::istringstream in("(10+10.10i)");
+    in >> x;
+    std::ostringstream out;
+    out << x; 
+    
+    CHECK( "(10.00+10.10i)" == out.str() );
 }
