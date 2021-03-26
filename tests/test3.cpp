@@ -20,7 +20,7 @@ TEST_CASE("Obliczanie wyrazenia zespolonego - dodawanie"){
     z.Arg2 = y;
     z.Op = Op_Dodaj;
 
-    w = Oblicz(z);
+    w = z.Oblicz();
 
     CHECK( (w.re == 5 && w.im == 0) );
 }
@@ -40,7 +40,7 @@ TEST_CASE("Obliczanie wyrazenia zespolonego - odejmowanie"){
     z.Arg2 = y;
     z.Op = Op_Odejmij;
 
-    w = Oblicz(z);
+    w = z.Oblicz();
 
     CHECK( (w.re == -1 && w.im == 4) );
 }
@@ -60,7 +60,7 @@ TEST_CASE("Obliczanie wyrazenia zespolonego - mnozenie"){
     z.Arg2 = y;
     z.Op = Op_Mnoz;
 
-    w = Oblicz(z);
+    w = z.Oblicz();
 
     CHECK( (w.re == 10 && w.im == 2) );
 }
@@ -80,7 +80,7 @@ TEST_CASE("Obliczanie wyrazenia zespolonego - dzielenie"){
     z.Arg2 = y;
     z.Op = Op_Dziel;
 
-    w = Oblicz(z);
+    w = z.Oblicz();
 
     CHECK( (w.re == 0.25 && w.im == 2.25) );
 }
@@ -100,7 +100,7 @@ TEST_CASE("Obliczanie wyrazenia zespolonego - dzielenie przez 0"){
     z.Arg2 = y;
     z.Op = Op_Dziel;
     
-    WARN_THROWS( w = Oblicz(z)  );
+    WARN_THROWS( w = z.Oblicz()  );
 }
 
 

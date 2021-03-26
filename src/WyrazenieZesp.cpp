@@ -13,7 +13,7 @@
  * Wynik:
  *    Wyswietlenie wyrazenia zespolonego na standardowym wyjsciu.
  */
-std::ostream& operator << ( std::ostream &StrWyj, WyrazenieZesp &WyrZ){
+std::ostream& operator << ( std::ostream &StrWyj, const WyrazenieZesp &WyrZ){
     char znak[]={'+','-','*','/'};      /* Tablica zawierajaca mozliwe znaki dzialan arytmetycznych */
     StrWyj << WyrZ.Arg1;
     StrWyj << znak[WyrZ.Op]; /* Wyswietlenie znaku dzialania arytmetycznego */
@@ -73,28 +73,27 @@ std::istream& operator >> (std::istream &StrWej, WyrazenieZesp &WyrZ){
  * Zwraca:
  *    Wynik dzialan arytmetycznych na liczbach zespolonych.
  */
-LZespolona Oblicz(WyrazenieZesp  WyrZ){
+LZespolona WyrazenieZesp::Oblicz() const{
     LZespolona Blad;
     Blad.re = 0;
     Blad.im = 0;
 
-    switch(WyrZ.Op){        /* Wybor dzialania do wykonania */
+    switch(this->Op){        /* Wybor dzialania do wykonania */
         
         case 0 :
-            return WyrZ.Arg1 + WyrZ.Arg2;
+            return this->Arg1 + this->Arg2;
         case 1 :
-            return WyrZ.Arg1 - WyrZ.Arg2;
+            return this->Arg1 - this->Arg2;
         case 2 :
-            return WyrZ.Arg1 * WyrZ.Arg2;
+            return this->Arg1 * this->Arg2;
         case 3 :
             try{                                            /* Obsluga wyjatkow. Dzielenie przez 0 */ 
-                return WyrZ.Arg1 / WyrZ.Arg2;
+                return this->Arg1 / this->Arg2;
             }
             catch (const char *msg){
                 std::cerr << msg << std::endl;
                 throw " Blad obliczen. Przyklad pominiety.";
             }
-            return WyrZ.Arg1 / WyrZ.Arg2;
         default:
             std::cerr << " Bledny operator.";
             break;

@@ -10,13 +10,10 @@ using namespace std;
  *  Zwraca:
  *    Statystyke z iloscia pytan i iloscia odpowiedzi ustawiona na 0. 
  */
-stat inicjuj(int IloscPytan){
-    stat statystyka;
-    statystyka.prawda = 0;
-    statystyka.falsz = 0;
-    statystyka.max = IloscPytan;
-
-    return statystyka;
+void stat::inicjuj(int IloscPytan){
+    this->prawda = 0;
+    this->falsz = 0;
+    this->max = IloscPytan;
 }
 
 
@@ -27,8 +24,8 @@ stat inicjuj(int IloscPytan){
  *  Wynik:
  *     Wyswietlenie  na standardowym wyjsciu statystyki odpowiedzi.
  */
-void wyswietl(stat statystyka){
-    cout << endl << "Ilosc dobrych odpowiedzi: " << noshowpos <<statystyka.prawda << endl;
-    cout << "Ilosc blednych odpowiedz: " << noshowpos <<statystyka.falsz << endl;
-    cout << "Wynik procentowy poprawnych odpowiedzi: "<< noshowpos << statystyka.prawda * 100 / statystyka.max << '%' << endl;
+void stat::wyswietl() const{
+    cout << endl << "Ilosc dobrych odpowiedzi: " << noshowpos <<this->prawda << endl;
+    cout << "Ilosc blednych odpowiedz: " << noshowpos <<this->falsz << endl;
+    cout << "Wynik procentowy poprawnych odpowiedzi: "<< noshowpos << this->prawda * 100 / this->max << '%' << endl;
 }

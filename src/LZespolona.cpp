@@ -14,8 +14,8 @@
  *    True dla równych liczb zespolonych.
  */
 
-bool  operator == (LZespolona  Skl1,  LZespolona  Skl2){
-  if( abs(Skl1.re - Skl2.re) <= MIN_DIFF && abs(Skl1.im - Skl2.im) <= MIN_DIFF )
+bool  LZespolona::operator == (LZespolona  Skl2) const{
+  if( abs(this->re - Skl2.re) <= MIN_DIFF && abs(this->im - Skl2.im) <= MIN_DIFF )
     return true;
   else
     return false;
@@ -29,12 +29,11 @@ bool  operator == (LZespolona  Skl1,  LZespolona  Skl2){
  * Zwraca:
  *    Sume dwoch skladnikow przekazanych jako parametry.
  */
-LZespolona  operator + (LZespolona  Skl1,  LZespolona  Skl2){
-  LZespolona  Wynik;
+LZespolona  LZespolona::operator + (LZespolona  Skl2) const{
+  Skl2.re += this->re;
+  Skl2.im += this->im;
 
-  Wynik.re = Skl1.re + Skl2.re;
-  Wynik.im = Skl1.im + Skl2.im;
-  return Wynik;
+  return Skl2;
 }
 
 /*!
@@ -45,12 +44,11 @@ LZespolona  operator + (LZespolona  Skl1,  LZespolona  Skl2){
  * Zwraca:
  *    Roznice dwoch skladnikow przekazanych jako parametry.
  */
-LZespolona operator - (LZespolona Skl1, LZespolona Skl2){
-  LZespolona Wynik;
+LZespolona LZespolona::operator - (LZespolona Skl2) const{
+   Skl2.re = this->re - Skl2.re;
+   Skl2.im = this->im - Skl2.im;
 
-  Wynik.re = Skl1.re - Skl2.re;
-  Wynik.im = Skl1.im - Skl2.im;
-  return Wynik;
+  return Skl2;
 }
 
 /*!
@@ -61,11 +59,11 @@ LZespolona operator - (LZespolona Skl1, LZespolona Skl2){
  * Zwraca:
  *    Ilczyn dwoch skladnikow przekazanych jako parametry.
  */
-LZespolona operator * (LZespolona Skl1, LZespolona Skl2){
+LZespolona LZespolona::operator * (LZespolona Skl2) const{
   LZespolona Wynik;
 
-  Wynik.re = Skl1.re * Skl2.re - Skl1.im * Skl2.im;
-  Wynik.im = Skl1.re * Skl2.im + Skl1.im * Skl2.re;
+  Wynik.re = this->re * Skl2.re - this->im * Skl2.im;
+  Wynik.im = this->re * Skl2.im + this->im * Skl2.re;
   return Wynik;
 }
 
@@ -78,17 +76,20 @@ LZespolona operator * (LZespolona Skl1, LZespolona Skl2){
  * Zwraca:
  *    Iloraz dwoch skladnikow przekazanych jako parametry.
  */
-LZespolona operator / (LZespolona Skl1, LZespolona Skl2){
-  LZespolona Sprz;
+LZespolona LZespolona::operator / (LZespolona Skl2) const{
   LZespolona Wynik;
+  double modul;
 
-  if(!modul(Skl2))
+  Wynik.re = 0;
+  Wynik.im = 0;
+  modul = Skl2.modul();
+
+  if( !modul )
     throw " Nie dziel przez 0";
 
-  Sprz = sprz(Skl2);
+  Skl2.sprz();
 
-  return Wynik = (Skl1 * Sprz)/modul(Skl2);
-
+  return Wynik = (*this * Skl2) / modul;
 }
 
 
@@ -101,7 +102,7 @@ LZespolona operator / (LZespolona Skl1, LZespolona Skl2){
  * Zwraca:
  *    Wynik dzielenia dwoch skladnikow przekazanych jako parametry.
  */
-LZespolona  operator / (LZespolona  Skl1,  double  Skl2){
+LZespolona  LZespolona::operator / (double  Skl2) const{
   LZespolona  Wynik;
   Wynik.re = 0;
   Wynik.im = 0;
@@ -109,8 +110,8 @@ LZespolona  operator / (LZespolona  Skl1,  double  Skl2){
 
 
   if(Skl2){
-    Wynik.re = Skl1.re / Skl2;
-    Wynik.im = Skl1.im / Skl2;
+    Wynik.re = this->re / Skl2;
+    Wynik.im = this->im / Skl2;
   }
   else
     throw "Nie dziel przez 0";
@@ -127,8 +128,8 @@ LZespolona  operator / (LZespolona  Skl1,  double  Skl2){
  *  Zwraca:
  *    Liczba nieujemna calkowita ( modul z liczby ). 
  */
-double modul (LZespolona Skl){
-  return fabs(pow(Skl.re,2) + pow(Skl.im,2));
+double  LZespolona::modul (){
+  return fabs(pow(this->re,2) + pow(this->im,2));
 }
 
 
@@ -141,13 +142,9 @@ double modul (LZespolona Skl){
  *  Zwraca:
  *    Wynik - Liczba po sprzezeniu.
  */
-LZespolona sprz(LZespolona Skl){
-  LZespolona Wynik;
+void LZespolona::sprz(){
 
-  Wynik.re = Skl.re;
-  Wynik.im = Skl.im * (-1);
-
-  return Wynik;
+  this->im = this->im * (-1) ;
 }
 
 /*!
@@ -158,7 +155,7 @@ LZespolona sprz(LZespolona Skl){
  *  Zwraca:
  *    StrWyj - Strumien wyjsciowy, na ktory wypisano liczbe.
  */
-std::ostream&  operator << (std::ostream &StrWyj, LZespolona &Skl1){
+std::ostream&  operator << (std::ostream &StrWyj, const LZespolona &Skl1){
   StrWyj.precision(2);
   StrWyj << std::noshowpos << '(' << std::fixed << Skl1.re << std::showpos << Skl1.im << "i)" << std::noshowpos ;
   return StrWyj;

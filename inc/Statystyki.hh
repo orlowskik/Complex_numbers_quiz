@@ -13,15 +13,8 @@ struct stat{
     double prawda;  /* Ilosc poprawnych odpowiedzi */
     double falsz;   /* Ilosc blednych odpowiedzi   */ 
     double max;     /* Ilosc pytan w arkuszu       */
+    void wyswietl() const; /*! Wyswietla statystyke odpowiedzi */
+    void inicjuj(int IloscPytan);   /*! Inicjuje statystyke */
 };
 
-/*!
- *  Wyswietla statystyke odpowiedzi
- */
-void wyswietl(stat statystyka);
-
-/*!
- *  Inicjuje statystyke
- */
-stat inicjuj(int IloscPytan);
 #endif

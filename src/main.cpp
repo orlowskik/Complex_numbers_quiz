@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 
 
 
-  Statystyka = inicjuj(BazaT.IloscPytan);
+  Statystyka.inicjuj(BazaT.IloscPytan);
 
   while (PobierzNastpnePytanie(&BazaT,&WyrZ_Testowe)) {
     Bledy_czytania = 0;
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
     Bledy_obliczen = 0;
 
     try{
-    Wynik = Oblicz(WyrZ_Testowe);
+    Wynik = WyrZ_Testowe.Oblicz();
     }
     catch ( const char* blad){
       cerr << blad << endl << endl;
@@ -57,7 +57,6 @@ int main(int argc, char **argv)
     }
 
     if(!Bledy_obliczen){
-      Wynik = Oblicz(WyrZ_Testowe);
       cout << " Podaj wynik operacji: " << WyrZ_Testowe << "=" << endl;
       cout << " Twoja odpowiedz: ";
       while(Bledy_czytania < 3 && Odczytano == 0){ 
@@ -78,7 +77,7 @@ int main(int argc, char **argv)
       cout << endl;
 
 
-      if(Odpowiedz == Wynik){
+      if(Odpowiedz == Wynik && Bledy_czytania != 3){
         Statystyka.prawda += 1;
         cout << " Poprawna odpowiedz!" << endl;
         cout << endl;
@@ -97,6 +96,6 @@ int main(int argc, char **argv)
   cout << " Koniec testu" << endl;
   cout << endl;
 
-  wyswietl(Statystyka);
+  Statystyka.wyswietl();
 
 }
