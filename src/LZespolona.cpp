@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-#define MIN_DIFF 0.01 /* Dopuszczalny blad odpowiedzi */
+#define MIN_DIFF 0.1 /* Dopuszczalny blad odpowiedzi */
 
 /*!
  * Realizuje porównanie dwoch liczb zespolonych.
@@ -15,7 +15,26 @@
  */
 
 bool  LZespolona::operator == (LZespolona  Skl2) const{
-  if( abs(this->re - Skl2.re) <= MIN_DIFF && abs(this->im - Skl2.im) <= MIN_DIFF )
+  double roznica1 = MIN_DIFF , roznica2 = MIN_DIFF;
+  
+
+  if(Skl2.re != 0 ){
+    while(  fabs( Skl2.re ) < roznica1){
+        roznica1 /= 10;
+    }
+  }
+
+  if(Skl2.im != 0 ){
+    while(  fabs( Skl2.im ) < roznica2 ){
+        roznica2 /= 10;
+    }
+  }
+  
+  roznica1 /= 10;
+  roznica2 /= 10;
+
+
+  if( fabs(this->re - Skl2.re) <= roznica1 && fabs(this->im - Skl2.im) <= roznica2 )
     return true;
   else
     return false;

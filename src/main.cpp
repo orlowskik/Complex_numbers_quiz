@@ -76,7 +76,6 @@ int main(int argc, char **argv)
       }
       cout << endl;
 
-
       if(Odpowiedz == Wynik && Bledy_czytania != 3){
         Statystyka.prawda += 1;
         cout << " Poprawna odpowiedz!" << endl;
