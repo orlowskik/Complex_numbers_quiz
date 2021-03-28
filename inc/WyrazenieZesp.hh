@@ -22,6 +22,7 @@ struct WyrazenieZesp {
   LZespolona   Arg2;   // Drugi argument wyrazenia arytmetycznego
 
   LZespolona Oblicz() const; /*! Oblicza wyrazenie zespolone */
+  bool       operator != (WyrazenieZesp Skl2) const;
 };
 
 
