@@ -224,6 +224,70 @@ TEST_CASE("test LZespolona Iloczyn"){
 }
 
 
+TEST_CASE("test LZespolona Iloczyn - mnozenie przez 0"){
+    LZespolona x, y, z;
+
+    x.re = 2;
+    x.im = 3;
+
+    y.re = 0;
+    y.im = 0;
+
+    z.re = 0;
+    z.im = 0;
+    
+    CHECK(x*y == z);
+}
+
+
+TEST_CASE("test LZespolona Iloczyn - mnozenie przez 0i"){
+    LZespolona x, y, z;
+
+    x.re = 2;
+    x.im = 3;
+
+    y.re = 1;
+    y.im = 0;
+
+    z.re = 2;
+    z.im = 3;
+    
+    CHECK(x*y == z);
+}
+
+
+TEST_CASE("test LZespolona Iloczyn - mnozenie przez 0rz"){
+    LZespolona x, y, z;
+
+    x.re = 2;
+    x.im = 3;
+
+    y.re = 0;
+    y.im = 1;
+
+    z.re = -3;
+    z.im = 2;
+    
+    CHECK(x*y == z);
+}
+
+TEST_CASE("test LZespolona Iloczyn - mnozenie przez 1,1 "){
+    LZespolona x, y, z;
+
+    x.re = 2;
+    x.im = 3;
+
+    y.re = 1;
+    y.im = 1;
+
+    z.re = -1;
+    z.im = 5;
+    
+    CHECK(x*y == z);
+}
+
+
+
 TEST_CASE("test LZespolona Iloraz liczb zespolonych"){
     LZespolona x, y, z;
 

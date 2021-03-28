@@ -175,9 +175,36 @@ void LZespolona::sprz(){
  *    StrWyj - Strumien wyjsciowy, na ktory wypisano liczbe.
  */
 std::ostream&  operator << (std::ostream &StrWyj, const LZespolona &Skl1){
-  StrWyj.precision(2);
-  StrWyj << std::noshowpos << '(' << std::fixed << Skl1.re << std::showpos << Skl1.im << "i)" << std::noshowpos ;
+  int n1 = 0, n2 = 0;
+
+
+  if(Skl1.re !=0 ){
+    while(  fabs(Skl1.re) < pow(10,- n1) ){
+      n1++;
+    }
+    if(fabs(Skl1.re) < 1)
+      n1++;
+  }
+
+  if(Skl1.im !=0 ){
+    while(  fabs(Skl1.im) < pow(10,- n2) ){
+      n2++;
+    }
+    if(fabs(Skl1.im) < 1)
+      n2++;
+  }
+
+  if(!n1)
+    n1 = 2;
+  if(!n2)
+    n2 = 2;
+
+  StrWyj.precision(n1);
+  StrWyj << std::noshowpos << '(' << std::fixed << Skl1.re ;
+  StrWyj.precision(n2);
+  StrWyj << std::showpos << Skl1.im << "i)" << std::noshowpos ;
   return StrWyj;
+
 }
 
 /*!

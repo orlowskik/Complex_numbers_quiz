@@ -68,6 +68,22 @@ TEST_CASE("LZespolona - wyswietlanie zaokraglane") {
 }
 
 
+TEST_CASE("LZespolona - wyswietlanie male liczby") {
+    LZespolona x;
+   
+    x.re = 0.0001;
+    x.im = 0.000001;
+    
+    std::ostringstream out;
+    
+    out << x;
+    std::cout << out.str() << std::endl;
+    CHECK( "(0.00010+0.0000010i)" == out.str() );
+}
+
+
+
+
 TEST_CASE("LZespolona - wczytywanie standard") {
     LZespolona x;
     
@@ -77,4 +93,48 @@ TEST_CASE("LZespolona - wczytywanie standard") {
     out << x; 
     
     CHECK( "(10.00+10.10i)" == out.str() );
+}
+
+
+TEST_CASE("Test sprzezenia niezerowego") {
+    LZespolona x,y;
+    
+    x.re = 2;
+    x.im = 2;
+
+    y.re = 2;
+    y.im = -2;
+
+    x.sprz();
+ 
+   CHECK( x == y );
+}
+
+TEST_CASE("Test sprzezenia zerowego") {
+    LZespolona x,y;
+    
+    x.re = 2;
+    x.im = 0;
+
+    y.re = 2;
+    y.im = 0;
+
+    x.sprz();
+ 
+   CHECK( x == y );
+}
+
+
+TEST_CASE("Test modulu do kwadratu") {
+    LZespolona x;
+    double y, w;
+    
+    x.re = 2;
+    x.im = 3;
+
+    y = x.modul();
+    w = 13.00;
+
+
+   CHECK( y == w );
 }
