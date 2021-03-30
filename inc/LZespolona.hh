@@ -42,7 +42,7 @@ std::istream&  operator >> (std::istream &StrWej , LZespolona &Skl1);
 /*!
 *   Funkcja pomocnicza uzywana przy wczytywaniu liczb zespolonych
 */
-void CzytajZnak( std::istream &StrWej, char Znak);
+void CzytajZnak( std::istream &StrWej, const char Znak);
 
 
 #endif

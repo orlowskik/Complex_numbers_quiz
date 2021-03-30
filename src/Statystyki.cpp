@@ -1,7 +1,6 @@
 #include "Statystyki.hh"
 #include <iostream>
 
-using namespace std;
 
 /*!
  *  Inicjuje statystyke odpowiedzi
@@ -24,8 +23,18 @@ void stat::inicjuj(int IloscPytan){
  *  Wynik:
  *     Wyswietlenie  na standardowym wyjsciu statystyki odpowiedzi.
  */
-void stat::wyswietl() const{
-    cout << endl << "Ilosc dobrych odpowiedzi: " << noshowpos <<this->prawda << endl;
-    cout << "Ilosc blednych odpowiedz: " << noshowpos <<this->falsz << endl;
-    cout << "Wynik procentowy poprawnych odpowiedzi: "<< noshowpos << this->prawda * 100 / this->max << '%' << endl;
+std::ostream& operator << (std::ostream &StrWyj, const stat Statystyka){
+    
+    if(Statystyka.prawda < 0 || Statystyka.max < 0 || Statystyka.falsz < 0 || Statystyka.prawda + Statystyka.falsz != Statystyka.max ){
+        std::cerr << " Bledna statystyka odpowiedzi !!! " << std::endl;
+        StrWyj.setstate(std::ios::failbit);
+        return StrWyj;
+    }
+
+
+    StrWyj << " Ilosc dobrych odpowiedzi: " << Statystyka.prawda << std::endl;
+    StrWyj << " Ilosc blednych odpowiedz: " << Statystyka.falsz << std::endl;
+    StrWyj << " Wynik procentowy poprawnych odpowiedzi: " << Statystyka.prawda * 100 / Statystyka.max << '%' << std::endl;
+
+    return StrWyj;
 }

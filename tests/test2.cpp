@@ -84,7 +84,7 @@ TEST_CASE("LZespolona - wyswietlanie male liczby") {
 
 
 
-TEST_CASE("LZespolona - wczytywanie standard") {
+TEST_CASE("LZespolona - wczytywanie standard 1") {
     LZespolona x;
     
     std::istringstream in("(10+10.10i)");
@@ -93,6 +93,96 @@ TEST_CASE("LZespolona - wczytywanie standard") {
     out << x; 
     
     CHECK( "(10.00+10.10i)" == out.str() );
+}
+
+
+TEST_CASE("LZespolona - wczytywanie standard 2") {
+    LZespolona x;
+    
+    std::istringstream in("(10.10-10i)");
+    in >> x;
+    std::ostringstream out;
+    out << x; 
+    
+    CHECK( "(10.10-10.00i)" == out.str() );
+}
+
+TEST_CASE("LZespolona - wczytywanie standard 3" ) {
+    LZespolona x;
+    
+    std::istringstream in("(-10.10-10i)");
+    in >> x;
+    std::ostringstream out;
+    out << x; 
+    
+    CHECK( "(-10.10-10.00i)" == out.str() );
+}
+
+
+TEST_CASE("LZespolona - wczytywanie skroconej notacji 1") {
+    LZespolona x;
+    
+    std::istringstream in("(10-i)");
+    in >> x;
+    std::ostringstream out;
+    out << x; 
+    
+    CHECK( "(10.00-1.00i)" == out.str() );
+}
+
+TEST_CASE("LZespolona - wczytywanie skroconej notacji 2") {
+    LZespolona x;
+    
+    std::istringstream in("(-i)");
+    in >> x;
+    std::ostringstream out;
+    out << x; 
+    
+    CHECK( "(0.00-1.00i)" == out.str() );
+}
+
+TEST_CASE("LZespolona - wczytywanie skroconej notacji 3") {
+    LZespolona x;
+    
+    std::istringstream in("(i)");
+    in >> x;
+    std::ostringstream out;
+    out << x; 
+    
+    CHECK( "(0.00+1.00i)" == out.str() );
+}
+
+TEST_CASE("LZespolona - wczytywanie skroconej notacji 4" ) {
+    LZespolona x;
+    
+    std::istringstream in("(10)");
+    in >> x;
+    std::ostringstream out;
+    out << x; 
+    
+    CHECK( "(10.00+0.00i)" == out.str() );
+}
+
+TEST_CASE("LZespolona - wczytywanie skroconej notacji 5") {
+    LZespolona x;
+    
+    std::istringstream in("(10i)");
+    in >> x;
+    std::ostringstream out;
+    out << x; 
+    
+    CHECK( "(0.00+10.00i)" == out.str() );
+}
+
+TEST_CASE("LZespolona - wczytywanie skroconej notacji 6") {
+    LZespolona x;
+    
+    std::istringstream in("(-10i)");
+    in >> x;
+    std::ostringstream out;
+    out << x; 
+    
+    CHECK( "(0.00-10.00i)" == out.str() );
 }
 
 

@@ -13,8 +13,10 @@ struct stat{
     double prawda;  /* Ilosc poprawnych odpowiedzi */
     double falsz;   /* Ilosc blednych odpowiedzi   */ 
     double max;     /* Ilosc pytan w arkuszu       */
-    void wyswietl() const; /*! Wyswietla statystyke odpowiedzi */
     void inicjuj(int IloscPytan);   /*! Inicjuje statystyke */
 };
+
+/*! Wyswietla statystyke na podanym strumieniu */
+std::ostream& operator << (std::ostream &StrWyj, const stat Statystyka);
 
 #endif

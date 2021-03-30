@@ -38,7 +38,7 @@ ${TBIN}/test_2: ${TBIN} ${OBJ}/LZespolona.o
 	g++ -o ${TESTS}/bin/test_2 ${FLAGS} -I${TESTS}/doctest ${TESTS}/test2.cpp ${OBJ}/LZespolona.o
 
 ${TBIN}/test_3: ${TBIN} ${OBJ}/LZespolona.o ${OBJ}/WyrazenieZesp.o 
-	g++ -o ${TESTS}/bin/test_3 ${FLAGS} -I${TESTS}/doctest ${TESTS}/test3.cpp ${OBJ}/LZespolona.o ${OBJ}/WyrazenieZesp.o 
+	g++ -o ${TESTS}/bin/test_3 ${FLAGS} -I${TESTS}/doctest ${TESTS}/test3.cpp ${OBJ}/LZespolona.o ${OBJ}/WyrazenieZesp.o ${OBJ}/Statystyki.o 
 
 ${TBIN}:
 	mkdir ${TBIN}

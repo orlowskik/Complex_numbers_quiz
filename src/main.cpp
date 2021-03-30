@@ -11,23 +11,16 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-  
+
   if (argc < 2) {
     cout << endl;
     cout << " Brak opcji okreslajacej rodzaj testu." << endl;
-    cout << " Dopuszczalne nazwy to:  latwy, trudny lub -o [nazwa_pliku]." << endl;
+    cout << " Dopuszczalne nazwy to:  latwy, trudny (statyczna baza) lub  latwe, trudne (czytanie z pliku)." << endl;
     cout << endl;
     return 1;
   }
 
-  if(!strcmp(argv[1],"-o")){
-
-    if(argc < 3){
-      cout << endl;
-      cout << " Brak opcji okreslajacej plik z tekstem." << endl;
-      cout << endl;
-      return 1;
-    }
+  if(strcmp(argv[1],"latwy") &&  strcmp(argv[1],"trudny") ){
 
     cout << endl;
     cout << " Start testu arytmetyki zespolonej: " ;
@@ -35,14 +28,21 @@ int main(int argc, char **argv)
 
     stat          Statystyka_dyn;
     ifstream      PlikWej;
-    WyrazenieZesp Wczyt_wyrazenie, Pop_wyr;
+    WyrazenieZesp Wczyt_wyrazenie;
     LZespolona    Odpowiedz_2;
     LZespolona    Wynik_2;
     int           Bledy_czytania_2, Odczytano_2, Bledy_obliczen_2 ;    
     string        Nazwa;
 
+    if(!strcmp(argv[1],"latwe"))
+      PlikWej.open("latwe.dat");
+    else if(!strcmp(argv[1],"trudne"))
+      PlikWej.open("trudne.dat");
+    else{
+      cout << " Niepoprawna opcja. Dopuszczalne nazwy to:  latwy, trudny (statyczna baza) lub  latwe, trudne (czytanie z pliku)." << endl;
+      return 1;
+    }
 
-    PlikWej.open(argv[2]);
     if(!PlikWej.is_open())
       return 1;
     
@@ -57,12 +57,10 @@ int main(int argc, char **argv)
       Odczytano_2 = 0;
       Bledy_obliczen_2 = 0;
 
+
       PlikWej >> Wczyt_wyrazenie;
-      
+
       if(PlikWej.good()){
-
-        Statystyka_dyn.max++;
-
 
         try{
         Wynik_2 = Wczyt_wyrazenie.Oblicz();
@@ -73,9 +71,10 @@ int main(int argc, char **argv)
         }
 
         if(!Bledy_obliczen_2){
+          Statystyka_dyn.max++;
           cout << " Podaj wynik operacji: " << Wczyt_wyrazenie << "=" << endl;
-          cout << " Twoja odpowiedz: ";
           while(Bledy_czytania_2 < 3 && Odczytano_2 == 0){ 
+            cout << " Twoja odpowiedz: ";
             cin >> Odpowiedz_2;
             if(cin.fail())
               Bledy_czytania_2++;
@@ -85,11 +84,9 @@ int main(int argc, char **argv)
             cin.clear();
             cin.ignore(1024,'\n');
             if(Bledy_czytania_2 > 0 && Odczytano_2 == 0 && Bledy_czytania_2 < 3){
-            cout << " Bledne wprowadzenie. Sprobuj ponownie" << endl;
-            cout << " Twoja odpowiedz: ";
+            cout << endl << " Blad zapisu liczby zespolonej. Sprobuj jescze raz." << endl << endl;
             }
           }
-          cout << endl;
 
           if(Odpowiedz_2 == Wynik_2 && Bledy_czytania_2 != 3){
             Statystyka_dyn.prawda += 1;
@@ -104,17 +101,18 @@ int main(int argc, char **argv)
         }
       }
       else{
-        if(Pop_wyr != Wczyt_wyrazenie)
+        if(!PlikWej.eof())
           cerr << " !!! Napotkano bledne wyrazenie. Zostalo ono pominiete !!!" << endl << endl ;
         PlikWej.clear();
         PlikWej.ignore(1024,'\n');
       }
-
-      Pop_wyr = Wczyt_wyrazenie;
     }
 
     PlikWej.close();
-    Statystyka_dyn.wyswietl();
+    cout << endl;
+    cout << " Koniec testu" << endl;
+    cout << endl;
+    cout << Statystyka_dyn;
   }
 
 
@@ -170,11 +168,10 @@ int main(int argc, char **argv)
 
           cin.clear();
           cin.ignore(1024,'\n');
-          if(Bledy_czytania > 0 && Odczytano == 0){
-          cout << endl << " Bledne wprowadzenie." << endl;
+          if(Bledy_czytania > 0 && Odczytano == 0 && Bledy_czytania < 3){
+          cout << endl << " Blad zapisu liczby zespolonej. Sprobuj jescze raz." << endl << endl;
           }
         }
-        cout << endl;
 
         if(Odpowiedz == Wynik && Bledy_czytania != 3){
           Statystyka_stat.prawda += 1;
@@ -189,13 +186,9 @@ int main(int argc, char **argv)
       }
     }
 
-    Statystyka_stat.wyswietl();
+    cout << endl;
+    cout << " Koniec testu" << endl;
+    cout << endl;
+    cout << Statystyka_stat;
   }
-
-  cout << endl;
-  cout << " Koniec testu" << endl;
-  cout << endl;
-
-  
-
 }

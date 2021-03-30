@@ -215,7 +215,7 @@ std::ostream&  operator << (std::ostream &StrWyj, const LZespolona &Skl1){
  *  Wynik:
  *     Ustawia flage niepowodzenia na strumieniu jezeli wczytany znak jest inny niz oczekiwany.
  */
-void CzytajZnak(std::istream &StrWej, char Znak){
+void CzytajZnak(std::istream &StrWej, const char Znak){
   char CzytanyZnak = ' ';
   StrWej >> CzytanyZnak;
 
@@ -234,15 +234,109 @@ void CzytajZnak(std::istream &StrWej, char Znak){
  *    StrWej - Strumien wejsciowy, z ktorego czytano liczbe.
  */
 std::istream& operator >> (std::istream &StrWej, LZespolona &Skl){
-  CzytajZnak(StrWej, '(');
-  StrWej >> Skl.re;
+  double x,y;
+  char znak1, znak2;
+
+  CzytajZnak(StrWej,'(');
   if(StrWej.fail())
     return StrWej;
-  StrWej >> Skl.im;
-  if(StrWej.fail())
-    return StrWej;
-  CzytajZnak(StrWej, 'i');
-  CzytajZnak(StrWej, ')');
+
+  StrWej.get(znak1);
+
+  switch(znak1){
+    case 'i' :
+      CzytajZnak(StrWej,')');
+      if(StrWej.good()){
+        Skl.re = 0;
+        Skl.im = 1;
+      }
+      return StrWej;
+    case '-' :
+      StrWej.get(znak2);
+      if(znak2 == 'i'){
+        CzytajZnak(StrWej,')');
+        if(StrWej.good()){
+           Skl.re = 0;
+           Skl.im = -1;
+         }
+         return StrWej;
+       }
+       StrWej.putback(znak2);
+       StrWej.putback(znak1);
+       break;
+
+     default :
+       StrWej.putback(znak1);
+       break;
+  }
+
+  StrWej >> x;
+  if(StrWej.good()){
+    StrWej.get(znak1);
+    switch(znak1){
+
+        case '-' :
+          StrWej.get(znak2);
+          if(znak2 == 'i'){
+            CzytajZnak(StrWej,')');
+            if(StrWej.good()){
+              Skl.re = x;
+              Skl.im = -1;
+            }
+          return StrWej;
+          }
+          StrWej.putback(znak2);
+          StrWej.putback(znak1);
+          break;
+        case '+' :
+          StrWej.get(znak2);
+          if(znak2 == 'i'){
+            CzytajZnak(StrWej,')');
+            if(StrWej.good()){
+              Skl.re = x;
+              Skl.im = 1;
+            }
+          return StrWej;
+          }
+          StrWej.putback(znak2);
+          StrWej.putback(znak1);
+          break;
+        default :
+          StrWej.putback(znak1);
+          break;
+    }
+
+    StrWej >> y;
+    if(StrWej.fail()){
+      StrWej.clear();
+      StrWej.get(znak1);
+      if(znak1 != 'i' && znak1 != ')'){
+        StrWej.setstate(std::ios::failbit);
+        return StrWej;
+      }
+      else{
+        if(znak1 == 'i' ){
+          CzytajZnak(StrWej,')');
+          if(StrWej.good()){
+            Skl.re = 0;
+            Skl.im = x;
+          }
+          return StrWej;
+        }
+        else if(znak1 == ')'){
+          Skl.re = x;
+          Skl.im = 0;
+          return StrWej;
+        }
+      }
+    }
+    CzytajZnak(StrWej,'i');
+    CzytajZnak(StrWej,')');
+    if(StrWej.good()){
+      Skl.re = x;
+      Skl.im = y;
+    }
+  }
 
   return StrWej;
 }
