@@ -101,19 +101,3 @@ LZespolona WyrazenieZesp::Oblicz() const{
 
     return Blad;
 }
-
-
-
-
-
-
-bool WyrazenieZesp::operator != (WyrazenieZesp Skl2) const{
-
-    if(this->Arg1 == Skl2.Arg1 && this->Arg2 == Skl2.Arg2 && this->Op == Skl2.Op)
-        return false;
-    else
-        return true;
-    
-
-
-}

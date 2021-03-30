@@ -20,21 +20,21 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  if(strcmp(argv[1],"latwy") &&  strcmp(argv[1],"trudny") ){
+  if(strcmp(argv[1],"latwy") &&  strcmp(argv[1],"trudny") ){    /* Opcje czytania z plikow latwe.dat lub trudne.dat*/
 
     cout << endl;
     cout << " Start testu arytmetyki zespolonej: " ;
 
 
-    stat          Statystyka_dyn;
-    ifstream      PlikWej;
-    WyrazenieZesp Wczyt_wyrazenie;
-    LZespolona    Odpowiedz_2;
-    LZespolona    Wynik_2;
-    int           Bledy_czytania_2, Odczytano_2, Bledy_obliczen_2 ;    
-    string        Nazwa;
+    stat          Statystyka_dyn;           /* Statystyka odpowiedzi */
+    ifstream      PlikWej;                  /* Uchwyt do pliku */
+    WyrazenieZesp Wczyt_wyrazenie;          /* Wczytane wyrazenie zespolone */
+    LZespolona    Odpowiedz_2;              /* Udzielona odpowiedz */
+    LZespolona    Wynik_2;                  /* Wynik wyliczony przez program */
+    int           Bledy_czytania_2, Odczytano_2, Bledy_obliczen_2 ;     /* Zmienne kontrolne bledow */ 
+    string        Nazwa;                    /* Zmienna przechowujaca pierwsza linie z pliku ( Informacja dla uzytkownika )*/
 
-    if(!strcmp(argv[1],"latwe"))
+    if(!strcmp(argv[1],"latwe"))    /* Wybor pliku */
       PlikWej.open("latwe.dat");
     else if(!strcmp(argv[1],"trudne"))
       PlikWej.open("trudne.dat");
@@ -43,16 +43,16 @@ int main(int argc, char **argv)
       return 1;
     }
 
-    if(!PlikWej.is_open())
+    if(!PlikWej.is_open())  /* Jezeli nie udalo sie otworzyc pliku program konczy dzialanie */
       return 1;
     
-    getline(PlikWej, Nazwa);
+    getline(PlikWej, Nazwa);  /* Wczytanie linii informacyjnej */
 
     cout << Nazwa << endl << endl;
     
-    Statystyka_dyn.inicjuj(0);
+    Statystyka_dyn.inicjuj(0); /* Inicjacja statystyki bez podania ilosci pytan */
 
-    while(!PlikWej.eof()){
+    while(!PlikWej.eof()){    /* Przeprowadzaj czytanie az do konca pliku */
       Bledy_czytania_2 = 0;
       Odczytano_2 = 0;
       Bledy_obliczen_2 = 0;
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
 
       if(PlikWej.good()){
 
-        try{
+        try{                                    /* Sprawdzenie dzielenia przez 0 */
         Wynik_2 = Wczyt_wyrazenie.Oblicz();
         }
         catch ( const char* blad){
@@ -70,10 +70,10 @@ int main(int argc, char **argv)
           Bledy_obliczen_2++;
         }
 
-        if(!Bledy_obliczen_2){
+        if(!Bledy_obliczen_2){      /* Brak bleadow - Poczatek testu */
           Statystyka_dyn.max++;
           cout << " Podaj wynik operacji: " << Wczyt_wyrazenie << "=" << endl;
-          while(Bledy_czytania_2 < 3 && Odczytano_2 == 0){ 
+          while(Bledy_czytania_2 < 3 && Odczytano_2 == 0){  /* Umozliwienie 3 poprawek wpisywania liczb */
             cout << " Twoja odpowiedz: ";
             cin >> Odpowiedz_2;
             if(cin.fail())
@@ -88,12 +88,12 @@ int main(int argc, char **argv)
             }
           }
 
-          if(Odpowiedz_2 == Wynik_2 && Bledy_czytania_2 != 3){
+          if(Odpowiedz_2 == Wynik_2 && Bledy_czytania_2 != 3){  /* Udzielono poprawnej odpowiedzi */
             Statystyka_dyn.prawda += 1;
             cout << " Poprawna odpowiedz!" << endl;
             cout << endl;
           }
-          else{
+          else{                   /* Udzielono blednej odpowiedzi lub wpisano 3 razy bledne wyrazenie */
             Statystyka_dyn.falsz += 1;
             cout << " Bledna odpowiedz! Poprawna odpowiedz to: " << Wynik_2; 
             cout << endl << endl;
@@ -101,23 +101,23 @@ int main(int argc, char **argv)
         }
       }
       else{
-        if(!PlikWej.eof())
+        if(!PlikWej.eof())  /* Komunikat o blednym wyrazeniu w pliku ( Gdy blad powoduje koniec pliku komunikat sie nie wyswietla ) */
           cerr << " !!! Napotkano bledne wyrazenie. Zostalo ono pominiete !!!" << endl << endl ;
-        PlikWej.clear();
-        PlikWej.ignore(1024,'\n');
+        PlikWej.clear();    /* Umozliwienie dalszego czytania */
+        PlikWej.ignore(1024,'\n'); /* Pominiecie linijki z blednym wyrazeniem */
       }
     }
 
-    PlikWej.close();
+    PlikWej.close();  /* Zamkniecie pliku i koniec testu */ 
     cout << endl;
     cout << " Koniec testu" << endl;
     cout << endl;
-    cout << Statystyka_dyn;
+    cout << Statystyka_dyn; /* Wyswietlenie statystyki */
   }
 
 
 
-  else{
+  else{  /* Jezeli nie wybrano czytania z pliku dane testowe brane sa z bazy */
 
     BazaTestu   BazaT = { nullptr, 0, 0 };
 
@@ -132,22 +132,22 @@ int main(int argc, char **argv)
     cout << " Start testu arytmetyki zespolonej: " << argv[1] << endl;
     cout << endl;
 
-    WyrazenieZesp   WyrZ_Testowe;
-    LZespolona      Odpowiedz;
-    LZespolona      Wynik;
-    stat            Statystyka_stat;
-    int             Bledy_czytania, Odczytano, Bledy_obliczen ;
+    WyrazenieZesp   WyrZ_Testowe;     /* Wyrazenie testowe*/
+    LZespolona      Odpowiedz;        /* Odpowiedz */
+    LZespolona      Wynik;            /* Wynik obliczony przez program */
+    stat            Statystyka_stat;  /* Statystyka odpowiedzi */
+    int             Bledy_czytania, Odczytano, Bledy_obliczen ; /* Kody bledow */
 
 
 
-    Statystyka_stat.inicjuj(BazaT.IloscPytan);
+    Statystyka_stat.inicjuj(BazaT.IloscPytan); /* Inicjalizacja statystyki iloscia bytan z bazy */
 
-    while (PobierzNastpnePytanie(&BazaT,&WyrZ_Testowe)) {
+    while (PobierzNastpnePytanie(&BazaT,&WyrZ_Testowe)) { /* Petla wybierajaca wyrazenia z bazy */
       Bledy_czytania = 0;
       Odczytano = 0;
       Bledy_obliczen = 0;
 
-      try{
+      try{        /* Wylapywanie dzielenia przez 0 */
       Wynik = WyrZ_Testowe.Oblicz();
       }
       catch ( const char* blad){
@@ -156,9 +156,9 @@ int main(int argc, char **argv)
         Bledy_obliczen++;
       }
 
-      if(!Bledy_obliczen){
+      if(!Bledy_obliczen){  /* Brak bledow - poczatek testu */
         cout << " Podaj wynik operacji: " << WyrZ_Testowe << "=" << endl;
-        while(Bledy_czytania < 3 && Odczytano == 0){ 
+        while(Bledy_czytania < 3 && Odczytano == 0){  /* Umozliwienie porawy wpisania liczby */
           cout << " Twoja odpowiedz: ";
           cin >> Odpowiedz;
           if(cin.fail())
@@ -166,14 +166,14 @@ int main(int argc, char **argv)
           else
             Odczytano++;
 
-          cin.clear();
+          cin.clear();        /* Umozliwienie ponownego wpisania liczby */
           cin.ignore(1024,'\n');
           if(Bledy_czytania > 0 && Odczytano == 0 && Bledy_czytania < 3){
           cout << endl << " Blad zapisu liczby zespolonej. Sprobuj jescze raz." << endl << endl;
           }
         }
 
-        if(Odpowiedz == Wynik && Bledy_czytania != 3){
+        if(Odpowiedz == Wynik && Bledy_czytania != 3){ /* Podanie prawidlowej odpowiedzi - wykluczenie gdy 3 razy blednie wprowadzono liczbe */
           Statystyka_stat.prawda += 1;
           cout << " Poprawna odpowiedz!" << endl;
           cout << endl;
@@ -186,7 +186,8 @@ int main(int argc, char **argv)
       }
     }
 
-    cout << endl;
+    /* Koniec testu i wyswietlenie statystyki */
+    cout << endl;     
     cout << " Koniec testu" << endl;
     cout << endl;
     cout << Statystyka_stat;

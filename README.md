@@ -1,38 +1,31 @@
 # Projekt 2 - Arytmetyka liczb zespolonych
 
-## Cel ćwiczenia
-Wykształcenie umiejętności definiowania przeciążeń operatorów arytmetycznych dwuargumentowych i jednoargumentowych dla własnych struktur danych oraz operatora porównania. Przećwiczenie podstawowych operacji na strumieniach plikowych.  Nabycie umiejętności definiowania przeciążeń operacji na strumieniach.
+Program domyslnie wyswietla liczby zespolone z dwoma miejscami po przecinku. W przypadku bardzo malych liczb
+automatycznie dostosowuje ilosc cyfr po przecinku do dwoch liczb znaczacych (t.j pierwsza liczba niezerowa i nastepna).
+Jednoczesne operacje na liczbach bardzo duzych i bardzo malych sa niezalecane, poniewaz beda brane pod uwage tylko czesci setne.
 
-## Opis zadania programowego
-Należy napisać program, który umożliwia wykonanie prostego sprawdzianu z arytmetyki liczb zespolonych.  Sprawdzian ma dotyczyć operacji dodawania, odejmowania, mnożenia i dzielenia. Zakłada się, ̇ze są dostępne co najmniej dwa zestawy pytań. Dla uproszczenia zakładamy, ̇ze liczby zespolone będą wyświetlane w nawiasach. W tej formie będą również wprowadzane. Przykładowy zapis wyrażeń podany jest poniżej.
+Porownywanie liczb typu double jest oparte na wyznaczaniu minimalnej roznicy pomiedzy nimi. Roznica ta jest automatycznie wyliczana
+dla czesci rzeczywistej i czesci urojonej z osobna. Maksymalna roznica wynosi 0.01 i jest to wartosc domyslna. W przypadku
+porownywania liczb mniejszych od danej roznicy ( wartosc bezwzgledna ) roznica jest zmniejszana dziesieciokrotnie az bedzie
+mniejsza od liczby zadanej. Zawsze dopuszczalny blad w przypadku liczb ulamkowych (mniejszych od 1 ) bedzie wynosil jedna
+pozycje drugiej liczby znaczacej. Dzieki temu operacje na krancach i granicach wykonuja sie prawidlowo.
 
-	(4.2+2i)+(0+2i)
-	(3-0i)*(-1+2.1i)
-	(0-4i)/(3-1i)
+# Czytanie z pliku
 
-W zapisie tym dla ułatwienia zachowanych jest kilka reguł:
-* każda liczba zespolona zawsze zapisywana jest w nawiasach półokrągłych,
-* zawsze występuje liczba oznaczająca część rzeczywistą, niezależnie od tego czy jest ona różna od zera, czy też równa jest zeru,
-* zawsze  występuje  liczba  oznaczająca  część urojoną, niezależnie od tego czy jest ona różna od zera, czy też równa jest zeru,
-* zestaw pytań zakończony jest znakiem kropki.
+Program posiada dwa tryby pracy - czytania z bazy w pliku objektowym i czytania wyrazen z pliku tekstowego. Wybory trybow
+dokonuje sie poprzez podanie odpowiednich nazw w parametrach wywolania programu.
 
-W trakcie realizacji testu program wyświetla kolejne wyrażenie i pyta użytkownika o wyniko peracji.  Udzieloną odpowiedź sprawdza z poprawnym wynikiem.  W przypadku poprawnej odpowiedzi, potwierdza ten fakt, zaś w przypadku błędnej odpowiedzi stwierdza ten fakt i podaje odpowiedź właściwą.  Po zakończeniu testu podawana jest statystyka błędnych i poprawnych odpowiedzi.
+# Wczytywanie liczb zespolonych
 
+Mozliwe jest wykorzystywanie domyslnej oraz skroconej formy zapisu liczb zespolonych. W plikach tekstowych znajduja sie 
+przykladowe realizacje wczytywania oraz pomijania bledow. W pliku trudne.dat znajduje sie skrocona forma zapisu.
+Ze skroconego zapisu mozna kozrystac zarowno w plikach jak i korzystajac ze standardowego wejscia jako uzytkownik.
 
-## Struktura repozytorium
-Repozytorium z zalążkiem do zadania ma następującą strukturę:
+# Informacje dodatkowe
+Statystyka znajduje sie w odrebnym module. Testy doctest zostaly dostosowane do charakterystyki programu. Operacje
+wczytywania liczb zostaly zrealizowane na metodach strumienia i przeciazeniach operatorow. Do wykluczenia operacji
+zabronionych matematycznie zostala wprowadzona obsluga wyjatkow.
 
-&nbsp;&nbsp; [src](src/) - folder z plikami źródłowymi\
-&nbsp;&nbsp; [inc](inc/)-- folder z plikami nagłówkowymi\
-&nbsp;&nbsp; [tests](tests/) - zawiera pliki źródłowe testów oraz biblioteki doctest\
-&nbsp;&nbsp; ├── bin - pliki binarne testów\
-&nbsp;&nbsp; └── doctest - pliki źródłowe dla biblioteki odpowiedzialnej za testy\
-&nbsp;&nbsp; [man](man/) - instrukcje do zadania oraz inne pomoce naukowe\
-&nbsp;&nbsp; Makefile - plik z dyrektywami do automatycznej kompilacji\
-&nbsp;&nbsp; .gitignore  - plik określający, które pliki mają być ignorowane przez Gita\
-
-## Odnośniki do źródeł
-[Strona kursu z Programowania Obiektowego](https://kcir.pwr.edu.pl/~kreczmer/po/)
 
 
 

@@ -19,13 +19,16 @@ void stat::inicjuj(int IloscPytan){
 /*!
  *  Wyswietla statystyke
  *  Argumenty:
- *    statystyka - statystyka odpowiedzi uzytkownika.
+ *    Ostream - strumien wyjsciowy, na ktory nalezy wypisac statystyke
+ *    Statystyka - statystyka odpowiedzi uzytkownika.
  *  Wynik:
- *     Wyswietlenie  na standardowym wyjsciu statystyki odpowiedzi.
+ *     Wyswietlenie na podanym wyjsciu statystyki odpowiedzi.
+ *  Zwraca :
+ *    Podany strumien wyjsciowy.
  */
 std::ostream& operator << (std::ostream &StrWyj, const stat Statystyka){
     
-    if(Statystyka.prawda < 0 || Statystyka.max < 0 || Statystyka.falsz < 0 || Statystyka.prawda + Statystyka.falsz != Statystyka.max ){
+    if(Statystyka.prawda < 0 || Statystyka.max < 0 || Statystyka.falsz < 0 || Statystyka.prawda + Statystyka.falsz != Statystyka.max ){ /* Wykluczenie bledow statystyki */
         std::cerr << " Bledna statystyka odpowiedzi !!! " << std::endl;
         StrWyj.setstate(std::ios::failbit);
         return StrWyj;

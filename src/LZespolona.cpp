@@ -13,28 +13,28 @@
  * Zwraca:
  *    True dla równych liczb zespolonych.
  */
-
 bool  LZespolona::operator == (LZespolona  Skl2) const{
   double roznica1 = MIN_DIFF , roznica2 = MIN_DIFF;
   
 
   if(Skl2.re != 0 ){
-    while(  fabs( Skl2.re ) < roznica1){
+    while(  fabs( Skl2.re ) < roznica1){   /* Dostosowanie roznicy dla czesci rzeczywistej */
         roznica1 /= 10;
     }
   }
 
-  if(Skl2.im != 0 ){
+  if(Skl2.im != 0 ){                       /* Dostosowanie roznicy dla czesci urojonej */
     while(  fabs( Skl2.im ) < roznica2 ){
         roznica2 /= 10;
     }
   }
   
-  roznica1 /= 10;
+  /* Minimalna roznica 0.01 / Ustawienie roznic dal dwoch liczb znaczacych */
+  roznica1 /= 10; 
   roznica2 /= 10;
 
 
-  if( fabs(this->re - Skl2.re) <= roznica1 && fabs(this->im - Skl2.im) <= roznica2 )
+  if( fabs(this->re - Skl2.re) <= roznica1 && fabs(this->im - Skl2.im) <= roznica2 ) /* Porownywanie liczb zespolonych*/
     return true;
   else
     return false;
@@ -175,33 +175,33 @@ void LZespolona::sprz(){
  *    StrWyj - Strumien wyjsciowy, na ktory wypisano liczbe.
  */
 std::ostream&  operator << (std::ostream &StrWyj, const LZespolona &Skl1){
-  int n1 = 0, n2 = 0;
+  int n1 = 0, n2 = 0; /* Parametry okreslajace ilosc miejsc po przecinku */
 
-
+  /* Dla liczb mniejszych od 1 ustawienie ilosci miejsc po przecinku na dwie cyfry znaczace */
   if(Skl1.re !=0 ){
-    while(  fabs(Skl1.re) < pow(10,- n1) ){
-      n1++;
+    while(  fabs(Skl1.re) < pow(10,- n1) ){ /* Ustawienia dla czesci rzeczywistej */
+      n1++;                                 
     }
     if(fabs(Skl1.re) < 1)
       n1++;
   }
 
   if(Skl1.im !=0 ){
-    while(  fabs(Skl1.im) < pow(10,- n2) ){
+    while(  fabs(Skl1.im) < pow(10,- n2) ){ /* Ustawienia dla czesci urojonej */
       n2++;
     }
     if(fabs(Skl1.im) < 1)
       n2++;
   }
-
-  if(!n1)
+  /* W przypadku liczb wiekszych od 1 ustawia ilosc miejsc po przecinku na 2 */
+  if(!n1) 
     n1 = 2;
   if(!n2)
     n2 = 2;
 
-  StrWyj.precision(n1);
+  StrWyj.precision(n1);     /* Precyzja pierwszej liczby */
   StrWyj << std::noshowpos << '(' << std::fixed << Skl1.re ;
-  StrWyj.precision(n2);
+  StrWyj.precision(n2);     /* Precyzja drugiej liczby */
   StrWyj << std::showpos << Skl1.im << "i)" << std::noshowpos ;
   return StrWyj;
 
@@ -234,50 +234,50 @@ void CzytajZnak(std::istream &StrWej, const char Znak){
  *    StrWej - Strumien wejsciowy, z ktorego czytano liczbe.
  */
 std::istream& operator >> (std::istream &StrWej, LZespolona &Skl){
-  double x,y;
-  char znak1, znak2;
+  double x,y;           /* Lioczby mozliwe do wczytania*/
+  char znak1, znak2;    /* Zmienne sluzace do przechowania znaku liczby */
 
-  CzytajZnak(StrWej,'(');
+  CzytajZnak(StrWej,'('); /* Sprawdzenie, czy wpisana liczba zaczyna sie od nawiasu */
   if(StrWej.fail())
     return StrWej;
 
-  StrWej.get(znak1);
-
+  StrWej >> znak1;  /* Wczytanie znaku znajdujacego sie po nawiasie */
+                      
   switch(znak1){
     case 'i' :
-      CzytajZnak(StrWej,')');
+      CzytajZnak(StrWej,')'); /* Rozpatrzenie sytuacji podania samego i w nawiasach */
       if(StrWej.good()){
         Skl.re = 0;
         Skl.im = 1;
       }
       return StrWej;
-    case '-' :
-      StrWej.get(znak2);
-      if(znak2 == 'i'){
+    case '-' :                   /* Rozpatrzenie sytuacji pojawienia sie znaku '-' */
+      StrWej >> znak2;        /* Sprawdzenie znaku znajdujacego sie po '-' */
+      if(znak2 == 'i'){         
         CzytajZnak(StrWej,')');
-        if(StrWej.good()){
+        if(StrWej.good()){      /* Gdy podano znak '-i' */
            Skl.re = 0;
            Skl.im = -1;
          }
          return StrWej;
        }
-       StrWej.putback(znak2);
+       StrWej.putback(znak2);   /* Jezeli podano inny znak po '-' odkladamy pobrane znaki w celu czytania liczby */
        StrWej.putback(znak1);
        break;
 
      default :
-       StrWej.putback(znak1);
+       StrWej.putback(znak1); /* Domyslnie czytamy cala liczbe */
        break;
   }
 
-  StrWej >> x;
-  if(StrWej.good()){
-    StrWej.get(znak1);
-    switch(znak1){
+  StrWej >> x;        /* Wczytanie pierwszej liczby*/
+  if(StrWej.good()){  /* Rozpatrujemy tylko mozliwosci sukcesu czytania, inne warianty zostaly juz sprawdzone*/
+    StrWej >> znak1 ;
+    switch(znak1){    /* Ponowanie sprawdzamy znak po liczbie w celu rozpatrzenia szczegolnych przypadkow */
 
         case '-' :
-          StrWej.get(znak2);
-          if(znak2 == 'i'){
+          StrWej >> znak2;
+          if(znak2 == 'i'){           /* Przypadek podania liczby -1 jako czesci urojonej*/
             CzytajZnak(StrWej,')');
             if(StrWej.good()){
               Skl.re = x;
@@ -285,11 +285,11 @@ std::istream& operator >> (std::istream &StrWej, LZespolona &Skl){
             }
           return StrWej;
           }
-          StrWej.putback(znak2);
+          StrWej.putback(znak2);    /* W przypadku znaku innego niz 'i' odkladamy znaki aby czytac cala liczbe */
           StrWej.putback(znak1);
           break;
         case '+' :
-          StrWej.get(znak2);
+          StrWej >> znak2 ;        /* Przypadek podania liczby +1 jako czesci urojonej */
           if(znak2 == 'i'){
             CzytajZnak(StrWej,')');
             if(StrWej.good()){
@@ -298,24 +298,24 @@ std::istream& operator >> (std::istream &StrWej, LZespolona &Skl){
             }
           return StrWej;
           }
-          StrWej.putback(znak2);
+          StrWej.putback(znak2);  /* W przypadku znaku innego niz 'i' odkladamy znaki aby czytac cala liczbe */
           StrWej.putback(znak1);
           break;
         default :
-          StrWej.putback(znak1);
+          StrWej.putback(znak1);  /* Domyslnie realizujemy czytanie calej liczby */
           break;
     }
 
-    StrWej >> y;
-    if(StrWej.fail()){
+    StrWej >> y;        /* Wczytanie drugiej liczby */
+    if(StrWej.fail()){  /* Rozpatrywanie szczegolnych przypadkow, gdy wczytano tylko 1 liczbe*/
       StrWej.clear();
-      StrWej.get(znak1);
-      if(znak1 != 'i' && znak1 != ')'){
+      StrWej >> znak1 ;
+      if(znak1 != 'i' && znak1 != ')'){     /* Sprawdzenie znaku w celu wykluczenia nieprawidlowych konfiguracji */
         StrWej.setstate(std::ios::failbit);
         return StrWej;
       }
       else{
-        if(znak1 == 'i' ){
+        if(znak1 == 'i' ){          /* Przypadek podania pierwszej liczby jako czesci urojonej (czesc rzeczywista rowna 0 )*/
           CzytajZnak(StrWej,')');
           if(StrWej.good()){
             Skl.re = 0;
@@ -323,14 +323,14 @@ std::istream& operator >> (std::istream &StrWej, LZespolona &Skl){
           }
           return StrWej;
         }
-        else if(znak1 == ')'){
+        else if(znak1 == ')'){    /* Przypadek podania pierwszej liczby jako czesci rzeczywistej (czesc urojona rowna 0) */
           Skl.re = x;
           Skl.im = 0;
           return StrWej;
         }
       }
     }
-    CzytajZnak(StrWej,'i');
+    CzytajZnak(StrWej,'i');   /* Przypadek podania liczby w domyslnej konfiguracji */
     CzytajZnak(StrWej,')');
     if(StrWej.good()){
       Skl.re = x;

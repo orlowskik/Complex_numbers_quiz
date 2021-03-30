@@ -72,13 +72,13 @@ TEST_CASE("LZespolona - wyswietlanie male liczby") {
     LZespolona x;
    
     x.re = 0.0001;
-    x.im = 0.000001;
+    x.im = -0.000001;
     
     std::ostringstream out;
     
     out << x;
     std::cout << out.str() << std::endl;
-    CHECK( "(0.00010+0.0000010i)" == out.str() );
+    CHECK( "(0.00010-0.0000010i)" == out.str() );
 }
 
 

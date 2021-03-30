@@ -1,10 +1,10 @@
 #ifndef STATYSTYKI_HH
 #define STATYSTYKI_HH
 
-
-
 #include "LZespolona.hh"
 #include "WyrazenieZesp.hh"
+
+
 
 /*!
  *  Modeluje pojecie statystyki
