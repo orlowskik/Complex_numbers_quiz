@@ -17,14 +17,16 @@ struct  LZespolona {
   double   re;    /*! Pole repezentuje czesc rzeczywista. */
   double   im;    /*! Pole repezentuje czesc urojona. */
 
-  LZespolona  operator + (LZespolona  Skl2) const;  /*! Dodaje dwie liczby zespolone. */
-  LZespolona  operator - (LZespolona  Skl2) const;  /*! Odejmuje dwie liczby zespolone */
-  LZespolona  operator * (LZespolona  Skl2) const;  /*! Mnozy dwie liczby zespolone */
-  LZespolona  operator / (LZespolona  Skl2) const;  /*! Dzieli dwie liczby zespolone */
-  LZespolona  operator / (double  Skl2) const;      /*! Dzieli liczbe sepolona pzrez skalar */
-  bool        operator == (LZespolona  Skl2) const; /*! Porownuje dwie liczby zespolone */
-  double      modul();                              /*! Tworzy modul z liczby sepolonej */
-  void        sprz();                               /*! Sprzega liczbe zespolona */
+  LZespolona  operator +  (LZespolona  Skl2) const;  /*! Dodaje dwie liczby zespolone. */
+  LZespolona  operator -  (LZespolona  Skl2) const;  /*! Odejmuje dwie liczby zespolone */
+  LZespolona  operator *  (LZespolona  Skl2) const;  /*! Mnozy dwie liczby zespolone */
+  LZespolona  operator /  (LZespolona  Skl2) const;  /*! Dzieli dwie liczby zespolone */
+  LZespolona  operator /  (double  Skl2) const;      /*! Dzieli liczbe sepolona pzrez skalar */
+  LZespolona  operator /= (LZespolona const &Skl2);  /*! Dodawanie z podstawieniem */
+  LZespolona  operator += (LZespolona const &Skl2);  /*! Dzielenie z podstawieniem */ 
+  LZespolona  sprz() const;                          /*! Sprzega liczbe zespolona */
+  bool        operator == (LZespolona  Skl2) const;  /*! Porownuje dwie liczby zespolone */
+  double      modul() const;                         /*! Tworzy modul z liczby sepolonej */
 };
 
 /*!
@@ -43,6 +45,12 @@ std::istream&  operator >> (std::istream &StrWej , LZespolona &Skl1);
 *   Funkcja pomocnicza uzywana przy wczytywaniu liczb zespolonych
 */
 void CzytajZnak( std::istream &StrWej, const char Znak);
+
+
+/*!
+*   Obliczanie glownego argumentu liczby zespolonej.
+*/
+double arg(LZespolona Skl);
 
 
 #endif

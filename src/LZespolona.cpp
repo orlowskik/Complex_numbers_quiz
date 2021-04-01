@@ -3,6 +3,7 @@
 #include <iostream>
 
 
+
 #define MIN_DIFF 0.1 /* Dopuszczalny blad odpowiedzi */
 
 /*!
@@ -55,6 +56,24 @@ LZespolona  LZespolona::operator + (LZespolona  Skl2) const{
   return Skl2;
 }
 
+
+/*!
+ * Realizuje dodanie dwoch liczb zespolonych.
+ * Argumenty:
+ *    Skl1 - pierwszy skladnik dodawania,
+ *    Skl2 - drugi skladnik dodawania.
+ * Zwraca:
+ *    Sume dwoch skladnikow przekazanych jako parametry.
+ */
+LZespolona  LZespolona::operator += (LZespolona const &Skl2){
+  this->re += Skl2.re;
+  this->im += Skl2.im;
+  
+  return *this;
+}
+
+
+
 /*!
  * Realizuje odejmowanie dwoch liczb zespolonych.
  * Argumenty:
@@ -96,7 +115,7 @@ LZespolona LZespolona::operator * (LZespolona Skl2) const{
  *    Iloraz dwoch skladnikow przekazanych jako parametry.
  */
 LZespolona LZespolona::operator / (LZespolona Skl2) const{
-  LZespolona Wynik;
+  LZespolona Wynik, Sprzezenie;
   double modul;
 
   Wynik.re = 0;
@@ -106,12 +125,32 @@ LZespolona LZespolona::operator / (LZespolona Skl2) const{
   if( !modul )
     throw " Nie dziel przez 0";
 
-  Skl2.sprz();
+  Sprzezenie = Skl2.sprz();
 
-  return Wynik = (*this * Skl2) / modul;
+  return Wynik = (*this * Sprzezenie) / modul;
 }
 
+/*!
+ * Realizuje dodanie dwoch liczb zespolonych.
+ * Argumenty:
+ *    Skl1 - pierwszy skladnik dodawania,
+ *    Skl2 - drugi skladnik dodawania.
+ * Zwraca:
+ *    Sume dwoch skladnikow przekazanych jako parametry.
+ */
+LZespolona  LZespolona::operator /= (LZespolona const &Skl2){
+  LZespolona Sprz;
+  double modul;
 
+
+  modul = Skl2.modul();
+  if( !modul )
+    throw " Nie dziel przez 0";
+
+  Sprz = Skl2.sprz();
+  
+  return *this = (*this * Sprz) / modul;
+}
 
 /*!
  * Realizuje dzielenie liczby zespolonej przez skakar.
@@ -147,7 +186,7 @@ LZespolona  LZespolona::operator / (double  Skl2) const{
  *  Zwraca:
  *    Liczba nieujemna calkowita ( modul z liczby ). 
  */
-double  LZespolona::modul (){
+double  LZespolona::modul () const{
   return fabs(pow(this->re,2) + pow(this->im,2));
 }
 
@@ -161,10 +200,49 @@ double  LZespolona::modul (){
  *  Zwraca:
  *    Wynik - Liczba po sprzezeniu.
  */
-void LZespolona::sprz(){
+LZespolona LZespolona::sprz() const{
+  LZespolona Wynik;
 
-  this->im = this->im * (-1) ;
+  Wynik.re = this->re;
+  Wynik.im = this->im * -1;
+
+  return Wynik;
+  
 }
+
+/*!
+ *  Oblicza argument glowny liczby zespolonej
+ *  Argumenty:
+ *    Skl1 - Liczba zespolona.
+ *  Zwraca:
+ *    Argument liczby zespolonej jako double.
+ */
+double arg(LZespolona Skl){
+  
+  if(Skl.re == 0.00 && Skl.im == 0.00){
+    std::cerr << " Argument jest nieokreslony!! ";
+    return 999;
+  }
+
+  if(!Skl.re){
+    if(Skl.im > 0){
+      return M_PI/2;
+    }
+    else{
+      return -M_PI/2;
+    }
+  }
+
+  if(Skl.re > 0)
+    return atan2(Skl.im,Skl.re);
+  else if(Skl.re*Skl.im > 0)
+    return atan2(Skl.im,Skl.re) + M_PI;
+  else
+    return atan2(-Skl.im,-Skl.re) + M_PI ;
+
+  return 999;
+}
+
 
 /*!
  *  Wyswietla liczbe zespolona na podanym wyjsciu.

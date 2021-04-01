@@ -373,3 +373,159 @@ TEST_CASE("Porownywanie malej roznicy"){
 }
 
 
+
+TEST_CASE("test LZespolona Suma z podstawieniem"){
+    LZespolona x, y, z;
+
+    x.re = 1;
+    x.im = 1;
+
+    y.re = 1;
+    y.im = -3;
+
+    x += y;
+
+    z.re = 2;
+    z.im = -2;
+    
+    CHECK( x == z);
+}
+
+TEST_CASE("test LZespolona Suma dla zer(int)"){
+    LZespolona x, y, z;
+
+    x.re = 0;
+    x.im = 0;
+
+    y.re = 0;
+    y.im = 0;
+
+    x += y;
+
+    z.re = 0;
+    z.im = 0;
+    
+    CHECK(x == z);
+}
+
+
+TEST_CASE("test LZespolona Suma dla zer(double)"){
+    LZespolona x, y, z;
+
+    x.re = 0.0;
+    x.im = 0.0;
+
+    y.re = 0.0;
+    y.im = 0.0;
+
+    x += y;
+
+    z.re = 0.0;
+    z.im = 0.0;
+    
+    CHECK(x == z);
+}
+
+
+
+TEST_CASE("test LZespolona Suma dla zakresu 0.00001"){
+    LZespolona x, y, z;
+
+    x.re = 0.00001;
+    x.im = 0.00001;
+
+    y.re = 0.00001;
+    y.im = 0.00001;
+
+    x += y;
+
+    z.re = 0.00002;
+    z.im = 0.00002;
+    
+    CHECK(x == z);
+}
+
+
+TEST_CASE("test LZespolona Suma dla zakresu 0.0001 ( sprawdzanie bledu )"){
+    LZespolona x, y, z;
+
+    x.re = 0.00001;
+    x.im = 0.00001;
+
+    y.re = 0.00001;
+    y.im = 0.00001;
+
+    x += y;
+
+    z.re = 0.00003;
+    z.im = 0.00003;
+    
+    CHECK( !(x == z));
+}
+
+
+TEST_CASE("test LZespolona Suma na granicach"){
+    LZespolona x, y, z;
+
+    x.re = 0.00001;
+    x.im = 0.00001;
+
+    y.re = 0.00009;
+    y.im = 0.00009;
+
+    x += y;
+
+    z.re = 0.0001;
+    z.im = 0.0001;
+    
+    CHECK(x == z);
+}
+
+TEST_CASE("test LZespolona Suma na granicach ( bledna) "){
+    LZespolona x, y, z;
+
+    x.re = 0.00001;
+    x.im = 0.00001;
+
+    y.re = 0.00009;
+    y.im = 0.00009;
+
+    x += y;
+
+    z.re = 0.0002;
+    z.im = 0.0002;
+    
+    CHECK( !(x == z) );
+}
+
+
+
+TEST_CASE("test LZespolona Iloraz liczb zespolonych"){
+    LZespolona x, y, z;
+
+    x.re = -4;
+    x.im = 8;
+
+    y.re = 2;
+    y.im = -1;
+
+    x /= y;
+
+    z.re = -3.2;
+    z.im = 2.4;
+    
+    CHECK(x == z);
+}
+
+
+TEST_CASE("test LZespolona Iloraz liczb zespolonych - dzielenie przez zero"){
+    LZespolona x, y;
+
+    x.re = 1;
+    x.im = 2;
+
+    y.re = 0;
+    y.im = 0;
+    
+    WARN_THROWS(x/=y);
+}

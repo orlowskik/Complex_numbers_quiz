@@ -3,6 +3,7 @@
 #include "Statystyki.hh"
 #include <fstream>
 #include <string.h>
+#include <cmath>
 
 using namespace std;
 
@@ -11,7 +12,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-
+  
   if (argc < 2) {
     cout << endl;
     cout << " Brak opcji okreslajacej rodzaj testu." << endl;
@@ -192,4 +193,31 @@ int main(int argc, char **argv)
     cout << endl;
     cout << Statystyka_stat;
   }
+
+
+  LZespolona TEST;
+  TEST.re = 0;
+  TEST.im = 5;
+  cout << endl << endl << endl;
+  cout.precision(5);
+  cout << " Sprawdzenie argumentow liczb zespolonych" <<endl;
+  cout << " Argument liczby (5i) wynosi: " << arg(TEST) << " a powinien 1.57080" << endl;
+  TEST.im = -10;
+  cout << " Argument liczby (-10i) wynosi: " << arg(TEST) << " a powinien -1.57080" << endl;
+  TEST.re = 4;
+  TEST.im = 4;
+  cout << " Argument liczby (4+4i) wynosi: " << arg(TEST) << " a powinien 0.78540" << endl;
+  TEST.re = -4;
+  TEST.im = 3;
+  cout << " Argument liczby (-4+3i) wynosi: " << arg(TEST) << " a powinien 2.49809" << endl;
+  TEST.re = -2;
+  TEST.im = -3;
+  cout << " Argument liczby (-2-3i) wynosi: " << arg(TEST) << " a powinien 0.98279" << endl;
+  TEST.re = 4;
+  TEST.im = 0;
+  cout << " Argument liczby (4) wynosi: " << arg(TEST) << " a powinien 0.00000" << endl;
+  TEST.re = 0;
+  TEST.im = 0;
+  cout << " Argument liczby (0) wynosi: " << arg(TEST) << " a powinien 999.00000" << endl;
+
 }

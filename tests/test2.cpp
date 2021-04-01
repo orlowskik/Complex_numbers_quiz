@@ -187,7 +187,7 @@ TEST_CASE("LZespolona - wczytywanie skroconej notacji 6") {
 
 
 TEST_CASE("Test sprzezenia niezerowego") {
-    LZespolona x,y;
+    LZespolona x,y,z;
     
     x.re = 2;
     x.im = 2;
@@ -195,13 +195,13 @@ TEST_CASE("Test sprzezenia niezerowego") {
     y.re = 2;
     y.im = -2;
 
-    x.sprz();
+    z = x.sprz();
  
-   CHECK( x == y );
+   CHECK( z == y );
 }
 
 TEST_CASE("Test sprzezenia zerowego") {
-    LZespolona x,y;
+    LZespolona x,y,z;
     
     x.re = 2;
     x.im = 0;
@@ -209,9 +209,9 @@ TEST_CASE("Test sprzezenia zerowego") {
     y.re = 2;
     y.im = 0;
 
-    x.sprz();
+    z = x.sprz();
  
-   CHECK( x == y );
+   CHECK( z == y );
 }
 
 
